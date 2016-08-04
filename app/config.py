@@ -2,15 +2,13 @@
 # -*- coding: utf-8 -*-
 
 """
-app view control
+app setting file
 
 """
 
 # built-in import
-import time
 
 # third-party import
-from flask import Flask, request, jsonify
 
 # this app-in import
 
@@ -20,12 +18,14 @@ __maintainer__ = "fangfei"
 __email__ = "fangfei@youku.com"
 __status__ = "Debug"
 
-app = Flask(__name__)
 
-@app.route('/')
-def index():
-    return "Hello World!"
+class Config(object):
+    SECRET_KEY = 's0me secret key string'
 
+class DevelopmentConfig(Config):
+    DEBUG = True
 
-if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5001)
+class ProductionConfig(Config):
+    DEBUG = False
+
+Conf = DevelopmentConfig
