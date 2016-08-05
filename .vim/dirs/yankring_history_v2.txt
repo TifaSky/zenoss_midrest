@@ -1,0 +1,38 @@
+,V
+sys.path.insert(0,parentdir),V
+parentdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__))),V
+import os,sys,V
+            user = {'id': chk_username},V
+"""",1
+sys.path.insert(0, parentdir),V
+from . import api,V
+    SECRET_KEY = Conf['SECRET_KEY'],V
+from flask import request, jsonify, make_response,V
+@api.route('/')def index():    return "Hello World!"@api.route('/authenticate', methods=['POST'])def auth_user():    chk_username = request.form.get('username', '')    chk_password = request.form.get('password', '')    if chk_username != '' or chk_password != '':        if chk_username == 'admin' and chk_password == 'admin':            user = {'id': chk_username}            return user    response = make_response(jsonify({"message": "invalid username/password"}))    response.status_code = 401    return response,v
+" set foldmethod=indent "set default foldmethod",V
+#}}},V
+let g:airline_theme = 'wombat',V
+#{{{ create_app,V
+#{{{#}}},V
+def create_app():#{{{#}}},V
+colorscheme solarized,V
+" set background=dark,V
+" syntax enable,V
+    "colorscheme fisa,V
+let g:airline_theme = 'bubblegum',V
+""""""""",1
+"""""",1
+""",1
+   let g:airline_symbols = {},V
+from flask import Flask, request, jsonify,V
+import time,V
+let g:airline_symbols = 'fancy',V
+set guifont=CONSOLA-Powerline:h11,V
+   let g:airline_symbols = 'fancy',V
+"""""""""",1
+set guifont=DejaVuSansMonoforPowerline:h11,V
+" " " " " " " " " " ,2
+wget -c $URL,V
+echo "Downloading font",V
+su,V
+URL=$1,V

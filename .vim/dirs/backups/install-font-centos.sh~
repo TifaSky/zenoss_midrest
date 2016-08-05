@@ -1,0 +1,22 @@
+#!/bin/bash
+
+FILENAME=Monaco_Linux.ttf
+FONT_DIR=/usr/share/fonts/monaco/
+
+echo "Start install"
+mkdir -p $FONT_DIR
+
+cp $FILENAME $FONT_DIR$FILENAME
+
+echo "Entering Font Directory"
+cd $FONT_DIR
+
+echo "Installing font"
+chmod 644 $FILENAME
+mkfontscale
+mkfontdir
+
+echo "Leaving Font Directory"
+cd -
+
+echo "Enjoy"
