@@ -7,6 +7,9 @@ app lancher
 """
 
 # built-in import
+import os,sys
+parentdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0,parentdir)
 
 # third-party import
 from flask import Flask
@@ -20,13 +23,14 @@ __maintainer__ = "fangfei"
 __email__ = "fangfei@youku.com"
 __status__ = "Debug"
 
+
 def create_app():
     app = Flask(__name__)
 
     app.config.from_object(Conf)
     app.sercret_key = app.config['SECRET_KEY']
     app.debug = app.config['DEBUG']
-    
+
     from app import api as api_blueprint
     app.register_blueprint(api_blueprint, url_prefix='/api')
 

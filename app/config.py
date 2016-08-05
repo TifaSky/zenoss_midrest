@@ -22,8 +22,10 @@ __status__ = "Debug"
 class Config(object):
     SECRET_KEY = 's0me secret key string'
 
+
 class DevelopmentConfig(Config):
     DEBUG = True
+
 
 class ProductionConfig(Config):
     DEBUG = False
