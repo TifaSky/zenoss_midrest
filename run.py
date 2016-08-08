@@ -2,28 +2,15 @@
 # -*- coding: utf-8 -*-
 
 """
-app lancher
-
+File: run.py
+Author: fangfei
+Email: fangfei@youku.com
+Description: simple development lancher
 """
 
-# built-in import
-
-# third-party import
 from flask import Flask
 
-# this app-in import
 from app.config import Conf
-
-__author__ = "fangfei"
-__version__ = "1.0.0"
-__maintainer__ = "fangfei"
-__email__ = "fangfei@youku.com"
-__status__ = "Debug"
-
-
-# TODO add logging handler
-# TODO add ldap simple server
-# TODO add ldap processing
 
 
 def create_app():
