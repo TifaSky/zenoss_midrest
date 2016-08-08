@@ -10,21 +10,21 @@ Email: fangfei@youku.com
 Description: switch environment config setting
 """
 
-# dict object to store all the configuration found
+# 保存配置信息的字典
 _configurations = {}
-# environment varaible used to specify which config to used
+# 标识使用配置对象的环境变量
 _env_name = "APP_ENV"
 _default_confname = "default"
 
 
 class metacls(type):
-    '''meta class for listening the config class's definition'''
+    '''监听配置对象的元类定义'''
 
     def __new__(mcs, name, bases, dict):
-        # jump it when if it is the Base `ConfigBase` class
+        # 如果时基准的ConfigBase,直接返回
         if dict.get("__is_base_confclass__"):
             return type.__new__(mcs, name, bases, dict)
-        # set confname to _default_confname when not set
+        # 如果confname没有设定,则使用_default_confname设置
         if not dict.get("__confname__"):
             dict["__confname__"] = _default_confname
         the_class = type.__new__(mcs, name, bases, dict)
@@ -81,10 +81,7 @@ config = default_config()
 
 
 def set_env_var(env_var):
-    '''set the environment varaible named
-    use the env value of `env_var` to figure out
-    which configuration should be used
-    '''
+    '''使用env_var设置标识使用配置对象的变量'''
 
     global _env_name
     _env_name = env_var
@@ -109,7 +106,7 @@ def refresh_config():
 
 
 def clear_config():
-    '''clear all configurations and reset the current config'''
+    '''清楚所有的配置对象,重设当前配置'''
 
     global _configurations
     global config
