@@ -21,7 +21,7 @@ from jwt import DecodeError, ExpiredSignature
 parentdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, parentdir)
 
-from config import Conf
+from setting import Conf
 
 __author__ = "fangfei"
 __version__ = "1.0.0"

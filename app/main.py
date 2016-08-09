@@ -32,9 +32,11 @@ def create_app2(ConfObj):
     app.config.from_object(ConfObj)
     app.sercret_key = app.config['SECRET_KEY']
     app.debug = app.config['DEBUG']
+    app.log_files = []
 
     from app_v1_0_0 import api as api_blueprint_v1_0_0
     app.register_blueprint(api_blueprint_v1_0_0, url_prefix='/api_v1_0_0')
+    app.log_files.append('app_v1_0_0')
 
     return app
 

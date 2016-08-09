@@ -21,10 +21,12 @@ __maintainer__ = "fangfei"
 __email__ = "fangfei@youku.com"
 __status__ = "Debug"
 
+logger = logging.getLogger('app_v1_0_0')
+
 
 @api.route('/')
 def index():
-    logging.info('test-helloworld')
+    logger.info('test-helloworld')
     return "Hello World!"
 
 

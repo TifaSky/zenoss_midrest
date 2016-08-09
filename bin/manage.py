@@ -15,8 +15,8 @@ Options:
     --port=<number>          port [default: 5001]
     --workers=<numnber>      the numnber of workers [default: 1]
     --maxrequests=<number>   max request limit [default: 10000]
-    --accesslog=<File>       access log file name [default: ./access.log]
-    --errorlog=<File>        error log file name [default: ./error.log]
+    --accesslog=<File>       access log file name [default: ]
+    --errorlog=<File>        error log file name [default: ]
 
 """
 
@@ -64,8 +64,20 @@ def init_app_logger(app):
     handler_root.setLevel(config.ROOT_LOG_LEVEL)
     handler_root.setFormatter(Formatter(config.LOG_BASE_FORMAT))
 
-    logging.getLogger().addHandler(handler_root)
-    logging.getLogger().setLevel(config.ROOT_LOG_LEVEL)
+    logging.getLogger('app').addHandler(handler_root)
+    logging.getLogger('app').setLevel(config.ROOT_LOG_LEVEL)
+
+    for app_log_v in app.log_files:
+        app_log_filename = config.ROOT_LOG.replace('app.log', app_log_v + ".log")
+        handler_app_v = OutputDependHandler(
+            TimedRotatingFileHandler(
+                app_log_filename, 'D', 1, 30),
+            (StreamHandler(sys.stdout)))
+        handler_app_v.setLevel(config.ROOT_LOG_LEVEL)
+        handler_app_v.setFormatter(Formatter(config.LOG_BASE_FORMAT))
+
+        logging.getLogger(app_log_v).addHandler(handler_app_v)
+        logging.getLogger(app_log_v).setLevel(config.ROOT_LOG_LEVEL)
 
 
 def _prepare_flask_app(confname):
@@ -131,7 +143,6 @@ def gunicorn_server(
                 'accesslog': accesslog,
                 'errorlog': errorlog
             }
-            #print gunicorn_options
             gunicorn_options.update(options)
 
             return gunicorn_options
@@ -149,8 +160,11 @@ def run(debug, config, host, port, **argv):
     if opts['debug'] is True:
         debug_server(config, host, port)
     else:
-        gunicorn_server(config, host, port, argv['workers'], argv['maxrequests'], argv['accesslog'], argv['errorlog'])
-        #gunicorn_server()
+        if str(argv['accesslog']).strip() == '' and str(argv['errorlog'] == ''):
+            pass
+            gunicorn_server(config, host, port, argv['workers'], argv['maxrequests'])
+        else:
+            gunicorn_server(config, host, port, argv['workers'], argv['maxrequests'], argv['accesslog'], argv['errorlog'])
     return {}
 
 
