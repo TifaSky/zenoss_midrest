@@ -30,7 +30,7 @@ class metacls(type):
         the_class = type.__new__(mcs, name, bases, dict)
 
         global _configurations
-        _configurations[dict["_default_confname"]] = the_class
+        _configurations[dict["__confname__"]] = the_class
         refresh_config()
 
         return the_class
@@ -60,7 +60,8 @@ class ClassProxy(object):
             try:
                 return getattr(self.cls, name)
             except AttributeError:
-                raise AttributeError("the configuration<%s> does has no attribute named '%s' " % (self.cls.__confname__, name))
+                raise AttributeError("the configuration<%s> does has no attribute named '%s' " % (
+                    self.cls.__confname__, name))
 
     def __setattr__(self, name, value):
         if name in self.__dict__:
@@ -96,7 +97,7 @@ def switch_config(confname):
         raise ValueError("configuration: %s not found" % confname)
 
     global config
-    config.set_class(confname)
+    config.set_class(_configurations[confname])
 
 
 def refresh_config():

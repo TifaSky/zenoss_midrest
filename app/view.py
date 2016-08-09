@@ -23,7 +23,6 @@ __status__ = "Debug"
 
 
 @api.route('/')
-@login_required
 def index():
     return "Hello World!"
 
