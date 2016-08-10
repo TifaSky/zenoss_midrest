@@ -3,6 +3,7 @@
 
 import logging
 from utils.switch_env import ConfigBase
+# from swing import ConfigBase
 
 """
 File: config.py
@@ -23,6 +24,12 @@ class Config(ConfigBase):
     LOG_BASE_FORMAT = "%(asctime)s %(levelname)s (%(filename)s:%(lineno)s) - %(message)s"
     LOG_APP_LEVEL = logging.WARNING
 
+    LDAP_URI = "ldap://10.10.0.20:389"
+    LDAP_USR = 'zenoss_aler'
+    LDAP_CREDENTIALS = 'mqvRUcxFLMG8'
+    LDAP_SEARCH_FILTER = 'sAMAccountName'
+    LDAP_SEARCH_BASE = 'DC=1verge,DC=com'
+
 
 class DevelopmentConfig(Config):
     __confname__ = "dev"
@@ -32,4 +39,4 @@ class ProductionConfig(Config):
     __confname__ = "prod"
     DEBUG = False
 
-Conf = DevelopmentConfig
+#Conf = DevelopmentConfig

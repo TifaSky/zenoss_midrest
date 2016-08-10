@@ -10,13 +10,14 @@ Description:
 
 from flask import Flask
 
-from setting import Conf
+from utils.switch_env import config
+import setting
 
 
 def create_app():
     app = Flask(__name__)
 
-    app.config.from_object(Conf)
+    app.config.from_object(config)
     app.sercret_key = app.config['SECRET_KEY']
     app.debug = app.config['DEBUG']
 

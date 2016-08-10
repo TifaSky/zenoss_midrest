@@ -2,24 +2,18 @@
 # -*- coding: utf-8 -*-
 
 """
-app view control
-
+File: view.py
+Author: fangfei
+Email: fangfei@youku.com
+Description:
 """
 
-# built-in import
 import logging
-# third-party import
+
 from flask import request, jsonify, make_response
 
-# this app-in import
 from . import api
-from utils.auth_check import login_required, create_token
-
-__author__ = "fangfei"
-__version__ = "1.0.0"
-__maintainer__ = "fangfei"
-__email__ = "fangfei@youku.com"
-__status__ = "Debug"
+from utils.auth_check import login_required, create_token, try_login
 
 logger = logging.getLogger('app_v1_0_0')
 
@@ -36,8 +30,11 @@ def auth_user():
     chk_password = request.form.get('password', '')
 
     if chk_username != '' or chk_password != '':
-        if chk_username == 'admin' and chk_password == 'admin':
+        rtn_code, msg = try_login(chk_username, chk_password)
+        if rtn_code == 1:
             return jsonify({'token': 'TOK ' + create_token(chk_username)})
+        else:
+            return jsonify({'message': msg})
 
     response = make_response(jsonify({"message": "invalid username/password"}))
     response.status_code = 401
