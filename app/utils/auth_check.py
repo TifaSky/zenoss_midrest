@@ -12,6 +12,7 @@ from datetime import datetime, timedelta
 import os
 import sys
 from functools import wraps
+import logging
 
 from flask import request, jsonify, g
 import jwt
@@ -23,6 +24,8 @@ sys.path.insert(0, parentdir)
 
 from utils.switch_env import get_env_var, refresh_config, config
 import setting
+
+logger = logging.getLogger('app')
 
 
 def try_login(user_id, passwd):
@@ -53,21 +56,24 @@ def try_login(user_id, passwd):
             else:
                 rtn_code = 0
                 msg = 'User not found'
+                logger.warn("User[%s] not found" % user_id)
         else:
             rtn_code = 0
             msg = 'User not found'
+            logger.warn("User[%s] not found" % user_id)
     except ldap.INVALID_CREDENTIALS, e:
-        print e
         rtn_code = 0
         msg = 'Invalid credentials'
+        logger.warn("User[%s] login faild: %s" % (user_id, str(e)))
     except ldap.LDAPError, e:
         print e
         rtn_code = 0
         msg = 'Login failed'
+        logger.error("User[%s] login faild: %s" % (user_id, str(e)))
     except Exception, e:
-        print e
         rtn_code = 0
         msg = 'Login failed'
+        logger.error("User[%s] login faild: %s" % (user_id, str(e)))
     finally:
         ld_conn.unbind()
         del ld_conn

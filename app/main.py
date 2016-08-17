@@ -9,12 +9,17 @@ Description:
 """
 
 from flask import Flask
+from zope.component import getGlobalSiteManager
+from zenoss.protocols.interfaces import IQueueSchema
 
 from utils.switch_env import config
 import setting
+from utils.schema import ZENOSS_QUEUE_SCHEMA
 
 
 def create_app():
+    getGlobalSiteManager().registerUtility(ZENOSS_QUEUE_SCHEMA, IQueueSchema)
+
     app = Flask(__name__)
 
     app.config.from_object(config)
@@ -28,6 +33,8 @@ def create_app():
 
 
 def create_app2(ConfObj):
+    getGlobalSiteManager().registerUtility(ZENOSS_QUEUE_SCHEMA, IQueueSchema)
+
     app = Flask(__name__)
 
     app.config.from_object(ConfObj)

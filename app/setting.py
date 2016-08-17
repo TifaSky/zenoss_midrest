@@ -30,6 +30,30 @@ class Config(ConfigBase):
     LDAP_SEARCH_FILTER = 'sAMAccountName'
     LDAP_SEARCH_BASE = 'DC=1verge,DC=com'
 
+    ZEP_URI = "http://10.103.11.71:8084"
+
+    DB_HOST = "10.103.11.22"
+    DB_PORT = 3306
+    DB_USER = 'zenoss'
+    DB_NAME = 'events'
+
+    PRODSTATECONVERSIONS = [
+        'Production:1000',
+        'Pre-Production:500',
+        'Test:400',
+        'Maintenance:300',
+        'Decommissioned:-1',
+    ]
+
+    PRIORITYCONVERSIONS = [
+        'Highest:5',
+        'High:4',
+        'Normal:3',
+        'Low:2',
+        'Lowest:1',
+        'Trivial:0',
+    ]
+
 
 class DevelopmentConfig(Config):
     __confname__ = "dev"
@@ -38,5 +62,4 @@ class DevelopmentConfig(Config):
 class ProductionConfig(Config):
     __confname__ = "prod"
     DEBUG = False
-
-#Conf = DevelopmentConfig
+    ZEP_URI = "http://10.103.11.71:8084"
